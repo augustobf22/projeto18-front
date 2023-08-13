@@ -1,6 +1,6 @@
 import styled from "styled-components"
 import { Link, useNavigate} from "react-router-dom"
-import MyWalletLogo from "../components/MyWalletLogo"
+import FreelaLogo from "../components/FreelaLogo"
 import axios from "axios";
 import { useState, useContext } from "react";
 import { UserContext } from "../contexts/UserContext.jsx"
@@ -10,7 +10,7 @@ const viteURL = import.meta.env.VITE_API_URL;
 export default function SignInPage() {
   const navigate = useNavigate();
 
-  const url = `${viteURL}/`;
+  const url = `${viteURL}/signin`;
 
   const [login, setLogin] = useState({
     email: "",
@@ -25,7 +25,6 @@ export default function SignInPage() {
     const promise = axios.post(url, login);
 
     promise.then(r => {
-      console.log(r.data);
       const {user, token} = r.data;
       setUser({user, token});
 
@@ -39,9 +38,9 @@ export default function SignInPage() {
   };
 
   return (
-    <SingInContainer>
+    <SignInContainer>
       <form onSubmit={submitForm}>
-        <MyWalletLogo />
+        <FreelaLogo />
         <input 
           data-test="email"
           required
@@ -56,7 +55,7 @@ export default function SignInPage() {
         <input 
           data-test="password"
           required
-          placeholder="Senha" 
+          placeholder="Password" 
           type="password" 
           value={login.password}
           onChange={e => setLogin({
@@ -64,20 +63,27 @@ export default function SignInPage() {
             password:e.target.value
           })}
         />
-        <button type="submit" data-test="sign-in-submit">Entrar</button>
+        <button type="submit" data-test="sign-in-submit">Enter</button>
       </form>
 
-      <Link to="/cadastro">
-        Primeira vez? Cadastre-se!
-      </Link>
-    </SingInContainer>
+      <a>
+        <Link to="/signup">
+          First time? Sign up!
+        </Link>
+      </a>
+      
+    </SignInContainer>
   )
 }
 
-const SingInContainer = styled.section`
+const SignInContainer = styled.section`
   height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+
+  a {
+    color: #75297a;
+  }
 `

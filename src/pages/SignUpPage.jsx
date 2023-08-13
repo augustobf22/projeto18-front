@@ -1,6 +1,6 @@
 import { Link, useNavigate } from "react-router-dom"
 import styled from "styled-components"
-import MyWalletLogo from "../components/MyWalletLogo"
+import FreelaLogo from "../components/FreelaLogo"
 import axios from "axios";
 import { useState } from "react";
 
@@ -9,27 +9,24 @@ const viteURL = import.meta.env.VITE_API_URL;
 export default function SignUpPage() {
   const navigate = useNavigate();
 
-  const url = `${viteURL}/cadastro`;
+  const url = `${viteURL}/signup`;
 
   const [signUp, setSignUp] = useState({
     name: "",
     email: "",
-    password: ""
+    phone: "",
+    picture: "",
+    password: "",
+    confirmPassword: ""
   });
-  const [confirmPass, setConfirm] = useState("");
 
   function submitForm(event) {
     event.preventDefault();
 
-    if(signUp.password!==confirmPass) {
-      alert("As senhas não estão iguais!");
-      return;
-    };
-
     const promise = axios.post(url, signUp);
 
     promise.then(r => {
-      navigate("/");
+      navigate("/signin");
     });
     promise.catch(r => {
       alert(r.response.data);
@@ -37,23 +34,24 @@ export default function SignUpPage() {
   };
 
   return (
-    <SingUpContainer>
+    <SignUpContainer>
       <form onSubmit={submitForm}>
-        <MyWalletLogo />
+        <FreelaLogo />
         <input
-          data-test="name"
           required
-          placeholder="Nome"
+          placeholder="Name"
           type="text"
           value={signUp.name}
           onChange={e => setSignUp({
             name: e.target.value,
             email: signUp.email,
-            password: signUp.password
+            phone: signUp.phone,
+            picture: signUp.picture,
+            password: signUp.password,
+            confirmPassword: signUp.confirmPassword
           })}
         />
         <input 
-          data-test="email"
           required 
           placeholder="E-mail" 
           type="email" 
@@ -61,43 +59,89 @@ export default function SignUpPage() {
           onChange={e => setSignUp({
             name: signUp.name,
             email: e.target.value,
-            password: signUp.password
+            phone: signUp.phone,
+            picture: signUp.picture,
+            password: signUp.password,
+            confirmPassword: signUp.confirmPassword
           })}
         />
         <input 
-          data-test="password"
           required 
-          placeholder="Senha" 
+          placeholder="Phone" 
+          type="text" 
+          value={signUp.phone}
+          onChange={e => setSignUp({
+            name: signUp.name,
+            email: signUp.email,
+            phone: e.target.value,
+            picture: signUp.picture,
+            password: signUp.password,
+            confirmPassword: signUp.confirmPassword
+          })}
+        />
+         <input 
+          required 
+          placeholder="Picture" 
+          type="text" 
+          value={signUp.picture}
+          onChange={e => setSignUp({
+            name: signUp.name,
+            email: signUp.email,
+            phone: signUp.phone,
+            picture: e.target.value,
+            password: signUp.password,
+            confirmPassword: signUp.confirmPassword
+          })}
+        />
+        <input 
+          required 
+          placeholder="Password" 
           type="password" 
           value={signUp.password}
           onChange={e => setSignUp({
             name:signUp.name,
             email: signUp.email,
-            password: e.target.value
+            phone: signUp.phone,
+            picture: signUp.picture,
+            password: e.target.value,
+            confirmPassword: signUp.confirmPassword
           })}
         />
         <input 
-          data-test="conf-password"
           required 
-          placeholder="Confirme a senha" 
+          placeholder="Confirm password" 
           type="password" 
-          value={confirmPass}
-          onChange={e => setConfirm(e.target.value)}
+          value={signUp.confirmPassword}
+          onChange={e => setSignUp({
+            name:signUp.name,
+            email: signUp.email,
+            phone: signUp.phone,
+            picture: signUp.picture,
+            password: signUp.password,
+            confirmPassword: e.target.value
+          })}
         />
-        <button type="submit" data-test="sign-up-submit">Cadastrar</button>
+        <button type="submit" data-test="sign-up-submit">Register</button>
       </form>
 
-      <Link to="/">
-        Já tem uma conta? Entre agora!
-      </Link>
-    </SingUpContainer>
+      <a>
+        <Link to="/signin">
+          Already have an account? Log in now!
+        </Link>  
+      </a>
+      
+    </SignUpContainer>
   )
 }
 
-const SingUpContainer = styled.section`
+const SignUpContainer = styled.section`
   height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+
+  a {
+    color: #75297a;
+  }
 `

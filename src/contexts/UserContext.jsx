@@ -11,7 +11,7 @@ export default function UserProvider({children}) {
 
     useEffect(() => {
         if(lsUser === null){
-            navigate("/");
+            navigate("/signin");
         } else {
             navigate("/home");
         }
