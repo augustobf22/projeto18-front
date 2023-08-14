@@ -1,10 +1,9 @@
 import styled from "styled-components"
-import { BiExit } from "react-icons/bi"
 import { useState, useContext, useEffect } from "react";
 import { UserContext } from "../contexts/UserContext.jsx";
 import axios from "axios";
 import { Link, useNavigate} from "react-router-dom";
-import FreelaLogo from "../components/FreelaLogo"
+import Header from "../components/Header.jsx";
 
 const viteURL = import.meta.env.VITE_API_URL;
 
@@ -38,43 +37,26 @@ export default function HomePage() {
     });
   }, []);
 
-  function logout() {
-     localStorage.removeItem("user");
-     alert("User logged out!");
-     navigate("/signin");
-  }
+  function openItem(item) {
+    navigate(`/model/${item.id}`);
+  };
 
   return (
     <HomeContainer>
-      <Header>
-        <FreelaLogo />
-        <BiExit onClick={logout} data-test="logout"/>
-      </Header>
+      <Header />
 
       <ItemsContainer>
         <ul>
           {models.map(m => (
-            <Item key={m._id}>
+            <Item key={m.id} onClick={() => openItem(m)}>
               <img src={m.picture} alt="pet picture" />
               <Info>
-                <a>
+                <h1>
                   Name: {m.name}
-                </a>
-                <a>
-                  Species: {m.species}
-                </a>
-                <a>
-                  Race: {m.race}
-                </a>
-                <a>
-                  Age: {m.age}
-                </a>
-                <a>
-                  Description: {m.description}
-                </a>
-                <a>
-                  Price: {m.pricePerDay}
-                </a>
+                </h1>
+                <h2>
+                  Price: {Number(m.pricePerDay).toLocaleString("en-US", {style:"currency", currency:"USD"})}
+                </h2>
               </Info>
             </Item>
           )
@@ -90,15 +72,7 @@ const HomeContainer = styled.div`
   flex-direction: column;
   height: calc(100vh - 50px);
 `
-const Header = styled.header`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 2px 5px 2px;
-  margin-bottom: 15px;
-  font-size: 26px;
-  color: #75297a;
-`
+
 const ItemsContainer = styled.div`
   width: 100%;
   justify-content: center;
@@ -107,28 +81,45 @@ const ItemsContainer = styled.div`
 `
 
 const Item = styled.li`
-  height: 400px;
+  height: 120px;
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
   align-items: center;
   background-color: #d2f9f6;
-  border: 1px solid black;
+  border-radius: 10px;
   gap: 10px;
+  padding: 10px;
+  margin-bottom: 20px;
+  box-shadow: 0 5px 15px rgba(145, 92, 182, 0.4);
+  
+  &:hover {
+    cursor: pointer;
+    border: 1px solid black;
+    opacity: 0.8;
+  };
 
   img {
-    border-radius: 150px;
+    border-radius: 50%;
     border: 1px solid black;
-    width: 250px;
-    object-fit: contain;
-  }
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+  };
 `
 
 const Info = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
+  justify-content: center;
   align-items: flex-start;
-  a {
+  width: 50%;
+  height: 100%;
+  h1 {
+    font-size: 25px;
     color: #75297a;
   } 
+  h2 {
+    font-size: 20px;
+    color: #75297a;
+  }
 `
