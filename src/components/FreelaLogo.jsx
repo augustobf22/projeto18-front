@@ -7,7 +7,7 @@ export default function FreelaLogo() {
 }
 
 const Text = styled.h1`
-    font-family: 'Mali', cursive;
+    font-family: 'Lobster Two', cursive;
     font-weight: 400;
     font-size: 32px;
     color: #75297a;

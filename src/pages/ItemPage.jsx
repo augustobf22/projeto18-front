@@ -36,15 +36,15 @@ export default function ItemPage() {
         <img src={model.picture} alt="pet picture" />
         <InfoContainer>
           <Info>
-            <h1>Name: {model.name} </h1>
-            <h1>Species: {model.species} </h1>
-            <h1>Race: {model.race} </h1>
-            <h1>Age: {model.age} </h1>
-            <h1>Description: {model.description}</h1>
+            <h1>{model.name} </h1>
+            <h2>Species: {model.species} </h2>
+            <h2>Race: {model.race} </h2>
+            <h2>Age: {model.age} </h2>
+            <h2>Description: {model.description}</h2>
             <h2>Price: {Number(model.pricePerHour).toLocaleString("en-US", {style:"currency", currency:"USD"})} </h2>
           </Info>
           <Info>
-            <h2>Owner Info</h2>
+            <h1>Owner Info</h1>
             <h2>Phone: {model.phone}</h2>
             <h2>E-mail: {model.email}</h2>
           </Info>
@@ -65,9 +65,12 @@ const ItemContainer = styled.div`
   width: 100%;
   justify-content: center;
   align-items: center;
+  display: flex;
+  flex-direction: column;
 
   img {
     width: 100%;
+    max-width: 400px;
     object-fit: cover;
     border: 1px solid black;
     box-shadow: 0 5px 15px rgba(145, 92, 182, 0.4);
@@ -77,19 +80,21 @@ const ItemContainer = styled.div`
 
 const InfoContainer = styled.div`
   display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  gap: 10px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
 `
 
 const Info = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  justify-content: flex-start;
+  justify-content: center;
+  align-items: center;
   gap: 10px;
   h1 {
-    font-size: 25px;
+    text-align: center;
+    font-size: 35px;
     color: #75297a;
   }   
   h2 {
