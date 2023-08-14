@@ -8,7 +8,7 @@ import Header from "../components/Header.jsx";
 const viteURL = import.meta.env.VITE_API_URL;
 
 export default function HomePage() {
-  const { user, setUser } = useContext(UserContext);
+  const { user } = useContext(UserContext);
   const { user: userObj, token } = user;
   const [models, setModels] = useState([]);
   const navigate = useNavigate();
@@ -55,7 +55,7 @@ export default function HomePage() {
                   Name: {m.name}
                 </h1>
                 <h2>
-                  Price: {Number(m.pricePerDay).toLocaleString("en-US", {style:"currency", currency:"USD"})}
+                  Price: {Number(m.pricePerHour).toLocaleString("en-US", {style:"currency", currency:"USD"})} /hour
                 </h2>
               </Info>
             </Item>
@@ -75,13 +75,15 @@ const HomeContainer = styled.div`
 
 const ItemsContainer = styled.div`
   width: 100%;
+  display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 10px;
 `
 
 const Item = styled.li`
   height: 120px;
+  width: calc(100vw - 150px);
   display: flex;
   justify-content: space-around;
   align-items: center;

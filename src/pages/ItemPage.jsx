@@ -1,5 +1,4 @@
 import styled from "styled-components"
-import { BiExit } from "react-icons/bi"
 import { useState, useContext, useEffect } from "react";
 import { UserContext } from "../contexts/UserContext.jsx";
 import axios from "axios";
@@ -29,26 +28,27 @@ export default function ItemPage() {
    });
   }, []);
 
-  function logout() {
-    localStorage.removeItem("user");
-    alert("User logged out!");
-    navigate("/signin");
-  };
-
   return (
     <PageContainer>
       <Header />
 
       <ItemContainer>
         <img src={model.picture} alt="pet picture" />
-        <Info>
+        <InfoContainer>
+          <Info>
             <h1>Name: {model.name} </h1>
             <h1>Species: {model.species} </h1>
             <h1>Race: {model.race} </h1>
             <h1>Age: {model.age} </h1>
             <h1>Description: {model.description}</h1>
-            <h2>Price: {Number(model.pricePerDay).toLocaleString("en-US", {style:"currency", currency:"USD"})} </h2>
-        </Info>
+            <h2>Price: {Number(model.pricePerHour).toLocaleString("en-US", {style:"currency", currency:"USD"})} </h2>
+          </Info>
+          <Info>
+            <h2>Owner Info</h2>
+            <h2>Phone: {model.phone}</h2>
+            <h2>E-mail: {model.email}</h2>
+          </Info>
+        </InfoContainer>
       </ItemContainer>
 
     </PageContainer>
@@ -75,16 +75,23 @@ const ItemContainer = styled.div`
   }
 `
 
+const InfoContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 10px;
+`
+
 const Info = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: flex-start;
+  justify-content: flex-start;
   gap: 10px;
   h1 {
     font-size: 25px;
     color: #75297a;
-  } 
+  }   
   h2 {
     font-size: 30px;
     color: #75297a;

@@ -25,10 +25,10 @@ export default function SignInPage() {
     const promise = axios.post(url, login);
 
     promise.then(r => {
-      const {user, token} = r.data;
-      setUser({user, token});
+      const {user, token, userId} = r.data;
+      setUser({user, token, userId});
 
-      localStorage.setItem("user", JSON.stringify({user, token}));
+      localStorage.setItem("user", JSON.stringify({user, token, userId}));
 
       navigate("/home");
     });
