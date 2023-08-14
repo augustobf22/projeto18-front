@@ -2,7 +2,7 @@ import { createGlobalStyle } from "styled-components";
 
 const GlobalStyle = createGlobalStyle`
     * {
-        font-family: 'Raleway';
+        font-family: 'Mali';
         font-style: normal;
         font-weight: 400;
     }

@@ -4,7 +4,7 @@ import { UserContext } from "../contexts/UserContext.jsx";
 import axios from "axios";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import Header from "../components/Header.jsx";
-import {AiFillDelete, AiOutlineReload} from "react-icons/ai";
+import { AiFillDelete, AiOutlineReload } from "react-icons/ai";
 
 const viteURL = import.meta.env.VITE_API_URL;
 
@@ -41,7 +41,7 @@ export default function UserPage() {
 
     async function toggleActive(modelId) {
         const verif = confirm("Are you sure you want to change this model status?");
-        if(!verif) return alert("The status will stay the same!");
+        if (!verif) return alert("The status will stay the same!");
 
         const urlModel = `${viteURL}/user/${id}/${modelId}`;
 
@@ -60,9 +60,9 @@ export default function UserPage() {
         }
     }
 
-    async function deleteModel(modelId){
+    async function deleteModel(modelId) {
         const verif = confirm("Are you sure you want to delete this model?");
-        if(!verif) return alert("Deletion aborted!");
+        if (!verif) return alert("Deletion aborted!");
 
         const urlModel = `${viteURL}/user/${id}/${modelId}`;
 
@@ -87,6 +87,11 @@ export default function UserPage() {
             <Header />
 
             <ItemsContainer>
+
+                <Placeholder models={models}>
+                    You haven't registered any pets yet!
+                </Placeholder>
+
                 <ul>
                     {models.map(m => (
                         <Item key={m.id}>
@@ -97,10 +102,10 @@ export default function UserPage() {
                                 Active: {m.isActive ? "Yes" : "No"}
                             </h2>
                             <div>
-                                <AiOutlineReload size={30} color={"#75297a"} onClick={() => toggleActive(m.id)}/>
+                                <AiOutlineReload size={30} color={"#75297a"} onClick={() => toggleActive(m.id)} />
                             </div>
                             <div>
-                                <AiFillDelete size={30} color={"#75297a"} onClick={() => deleteModel(m.id)}/>
+                                <AiFillDelete size={30} color={"#75297a"} onClick={() => deleteModel(m.id)} />
                             </div>
                         </Item>
                     )
@@ -124,6 +129,16 @@ const ItemsContainer = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+`
+
+const Placeholder = styled.div`
+    width: calc(100vw - 150px);
+    font-size: 25px;
+    color: #75297a;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    display: ${props => props.models.length === 0 ? "flex" : "none" }; 
 `
 
 const Item = styled.li`
